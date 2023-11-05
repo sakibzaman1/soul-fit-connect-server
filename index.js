@@ -27,6 +27,27 @@ async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
     // await client.connect();
+
+    const serviceCollection = client.db('soulFitServiceDB').collection('services');
+
+     // Read data
+    // Read services
+    app.get('/services', async(req, res)=> {
+        const cursor = serviceCollection.find();
+        const result = await cursor.toArray();
+        res.send(result);
+    });
+
+
+     // Create data
+    // post service
+    app.post('/services', async(req, res)=> {
+        const newService = req.body;
+        console.log(newService)
+        const result = await serviceCollection.insertOne(newService);
+        res.send(result);
+    });
+
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
