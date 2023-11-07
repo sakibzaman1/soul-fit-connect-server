@@ -66,6 +66,31 @@ async function run() {
       res.send(result);
     });
 
+     // update product
+
+     app.put('/services/:id', async (req, res) => {
+      const id = req.params.id;
+      const filter = { _id: new ObjectId(id) }
+      const options = { upsert: true }
+      const updatedService = req.body;
+      const service = {
+          $set: {
+              serviceName: updatedService.serviceName,
+              serviceImage: updatedService.serviceImage,
+              providerLocation: updatedService.providerLocation,
+              price: updatedService.price,
+              serviceArea: updatedService.serviceArea,
+              proName: updatedService.proName,
+              proImage : updatedService.proImage,
+              proEmail : updatedService.proEmail,
+              description : updatedService.description
+          }
+      }
+      const result = await serviceCollection.updateOne(filter, service, options)
+      res.send(result)
+
+  })
+
     // post my schedules
     app.post("/myschedules", async (req, res) => {
       const myNewService = req.body;
