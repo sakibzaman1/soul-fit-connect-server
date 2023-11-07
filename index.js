@@ -66,7 +66,7 @@ async function run() {
       res.send(result);
     });
 
-     // update product
+     // update service
 
      app.put('/services/:id', async (req, res) => {
       const id = req.params.id;
@@ -89,6 +89,16 @@ async function run() {
       const result = await serviceCollection.updateOne(filter, service, options)
       res.send(result)
 
+  })
+
+  // Delete data
+    // delete service
+
+    app.delete('/services/:id', async(req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) }
+      const result = await serviceCollection.deleteOne(query)
+      res.send(result)
   })
 
     // post my schedules
